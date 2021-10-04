@@ -1,40 +1,39 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+generator client {
+  provider = "prisma-client-js"
+}
 
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
-}
-
-model Filme {
-  id Int @default(autoincrement()) @id
-  nome String
-  imagem String?
+model filme {
+  id              Int             @id @default(autoincrement())
+  nome            String
+  imagem          String?
   data_lancamento String
-  duracao Int
-  genero Genero[]
-  participantes Participantes[]
-
+  duracao         Int
+  genero          genero[]
+  participantes   participantes[]
 }
 
-model Genero {
-  id Int @default(autoincrement()) @id
-  nome String @unique
-  filme Filme? @relation(fields: [filmeId], references: [id])
+model genero {
+  id      Int    @id @default(autoincrement())
+  nome    String @unique(map: "Genero_nome_key")
   filmeId Int?
+  filme   filme? @relation(fields: [filmeId], references: [id], map: "Genero_filmeId_fkey")
+
+  @@index([filmeId], map: "Genero_filmeId_fkey")
 }
 
-model Participantes {
-  id Int @default(autoincrement()) @id
-  nome String
-  imagem String
+model participantes {
+  id              Int    @id @default(autoincrement())
+  nome            String
+  imagem          String
   data_nascimento String
-  staff String
-  filme Filme? @relation(fields: [filmeId], references: [id])
-  filmeId Int?
-}
+  staff           String
+  filmeId         Int?
+  filme           filme? @relation(fields: [filmeId], references: [id], map: "Participantes_filmeId_fkey")
 
+  @@index([filmeId], map: "Participantes_filmeId_fkey")
+}

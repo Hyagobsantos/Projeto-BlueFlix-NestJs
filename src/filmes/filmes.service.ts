@@ -1,9 +1,7 @@
 import { Filme, Prisma } from '.prisma/client';
 import { Injectable } from '@nestjs/common';
-import { Participante } from 'src/participante/entities/participante.entity';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateFilmeDto } from './dto/create-filme.dto';
-import { UpdateFilmeDto } from './dto/update-filme.dto';
+
 
 @Injectable()
 export class FilmesService {

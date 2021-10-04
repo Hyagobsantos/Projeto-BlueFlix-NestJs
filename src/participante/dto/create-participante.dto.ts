@@ -3,11 +3,11 @@ import {IsNotEmpty, IsOptional} from 'class-validator'
 export class CreateParticipanteDto {
 
   @IsNotEmpty()
-  nome: String
+  nome: string
 
   @IsOptional()
-  imagem: String
-  data_nascimento: String
-  staff: String
+  imagem: string
+  data_nascimento: string
+  staff: string
   filmeId: number
 }

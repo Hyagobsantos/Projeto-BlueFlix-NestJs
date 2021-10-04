@@ -9,13 +9,13 @@ export class GeneroController {
 
   @Get('/list')
   @UsePipes(ValidationPipe)
-  getAll() {
+  async getAll() {
     return this.generoService.getAll();
   }
 
   @Get('/list/:id')
   @UsePipes(ValidationPipe)
-  getId(@Param('id') id: string) {
+  async getId(@Param('id') id: string) {
     return this.generoService.getId({ id: Number(id) });
   }
 

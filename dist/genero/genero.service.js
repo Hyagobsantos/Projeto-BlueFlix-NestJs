@@ -29,12 +29,13 @@ let GeneroService = class GeneroService {
         return this.prisma.genero.update({
             data,
             where: {
-                id: generoId
+                id: generoId,
             },
         });
     }
     async deleteOneFilme(where) {
-        return this.prisma.genero.delete({ where });
+        const user = this.prisma.genero.delete({ where });
+        return user;
     }
 };
 GeneroService = __decorate([

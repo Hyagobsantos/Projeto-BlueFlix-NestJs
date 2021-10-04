@@ -20,10 +20,10 @@ let GeneroController = class GeneroController {
     constructor(generoService) {
         this.generoService = generoService;
     }
-    getAll() {
+    async getAll() {
         return this.generoService.getAll();
     }
-    getId(id) {
+    async getId(id) {
         return this.generoService.getId({ id: Number(id) });
     }
     async create(createGenero) {
@@ -41,7 +41,7 @@ __decorate([
     (0, common_1.UsePipes)(common_1.ValidationPipe),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], GeneroController.prototype, "getAll", null);
 __decorate([
     (0, common_1.Get)('/list/:id'),
@@ -49,7 +49,7 @@ __decorate([
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], GeneroController.prototype, "getId", null);
 __decorate([
     (0, common_1.Post)('create'),

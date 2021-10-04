@@ -1,34 +1,39 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete,ValidationPipe,UsePipes,ParseIntPipe, Put} from '@nestjs/common';
 import { ParticipanteService } from './participante.service';
 import { CreateParticipanteDto } from './dto/create-participante.dto';
-import { UpdateParticipanteDto } from './dto/update-participante.dto';
+import { Participantes } from '.prisma/client';
 
 @Controller('participante')
 export class ParticipanteController {
-  constructor(private readonly participanteService: ParticipanteService) {}
+  constructor(private participanteService: ParticipanteService) {}
 
-  @Post()
-  create(@Body() createParticipanteDto: CreateParticipanteDto) {
-    return this.participanteService.create(createParticipanteDto);
-  }
-
-  @Get()
-  findAll() {
+  @Get('/list')
+  @UsePipes(ValidationPipe)
+  async findAll() {
     return this.participanteService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.participanteService.findOne(+id);
+  @Get('/list/:id')
+  @UsePipes(ValidationPipe)
+  async findOne(@Param('id') id: number) {
+    return this.participanteService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateParticipanteDto: UpdateParticipanteDto) {
-    return this.participanteService.update(+id, updateParticipanteDto);
+  @Post('create')
+  @UsePipes(ValidationPipe)
+  async create(@Body() createParticipante: CreateParticipanteDto):Promise<Participantes> {
+    return this.participanteService.create(createParticipante);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.participanteService.remove(+id);
+  @Put('/update/:id')
+  @UsePipes(ValidationPipe)
+  async update(@Body() createParticipante: CreateParticipanteDto, @Param('id', ParseIntPipe) id:number): Promise<Participantes> {
+    return this.participanteService.update(id, createParticipante);
+  }
+
+  @Delete('/delete/:id')
+  @UsePipes(ValidationPipe)
+  async delete(@Param('id') id: string) {
+    return this.participanteService.remove({ id: Number(id) });
   }
 }

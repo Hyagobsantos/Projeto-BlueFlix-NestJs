@@ -1,9 +1,11 @@
-import { CreateParticipanteDto } from './dto/create-participante.dto';
-import { UpdateParticipanteDto } from './dto/update-participante.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { Participantes, Prisma } from '.prisma/client';
 export declare class ParticipanteService {
-    create(createParticipanteDto: CreateParticipanteDto): string;
-    findAll(): string;
-    findOne(id: number): string;
-    update(id: number, updateParticipanteDto: UpdateParticipanteDto): string;
-    remove(id: number): string;
+    private prisma;
+    constructor(prisma: PrismaService);
+    findAll(): Promise<Participantes[]>;
+    findOne(participanteId: number): Promise<Participantes>;
+    create(data: Prisma.ParticipantesCreateInput): Promise<Participantes>;
+    update(participanteId: number, data: Prisma.ParticipantesCreateInput): Promise<Participantes>;
+    remove(where: Prisma.ParticipantesWhereUniqueInput): Promise<Participantes>;
 }

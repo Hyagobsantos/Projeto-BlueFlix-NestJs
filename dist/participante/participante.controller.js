@@ -16,62 +16,66 @@ exports.ParticipanteController = void 0;
 const common_1 = require("@nestjs/common");
 const participante_service_1 = require("./participante.service");
 const create_participante_dto_1 = require("./dto/create-participante.dto");
-const update_participante_dto_1 = require("./dto/update-participante.dto");
 let ParticipanteController = class ParticipanteController {
     constructor(participanteService) {
         this.participanteService = participanteService;
     }
-    create(createParticipanteDto) {
-        return this.participanteService.create(createParticipanteDto);
-    }
-    findAll() {
+    async findAll() {
         return this.participanteService.findAll();
     }
-    findOne(id) {
-        return this.participanteService.findOne(+id);
+    async findOne(id) {
+        return this.participanteService.findOne(id);
     }
-    update(id, updateParticipanteDto) {
-        return this.participanteService.update(+id, updateParticipanteDto);
+    async create(createParticipante) {
+        return this.participanteService.create(createParticipante);
     }
-    remove(id) {
-        return this.participanteService.remove(+id);
+    async update(createParticipante, id) {
+        return this.participanteService.update(id, createParticipante);
+    }
+    async delete(id) {
+        return this.participanteService.remove({ id: Number(id) });
     }
 };
 __decorate([
-    (0, common_1.Post)(),
+    (0, common_1.Get)('/list'),
+    (0, common_1.UsePipes)(common_1.ValidationPipe),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ParticipanteController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)('/list/:id'),
+    (0, common_1.UsePipes)(common_1.ValidationPipe),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], ParticipanteController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.Post)('create'),
+    (0, common_1.UsePipes)(common_1.ValidationPipe),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_participante_dto_1.CreateParticipanteDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], ParticipanteController.prototype, "create", null);
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Put)('/update/:id'),
+    (0, common_1.UsePipes)(common_1.ValidationPipe),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], ParticipanteController.prototype, "findAll", null);
-__decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], ParticipanteController.prototype, "findOne", null);
-__decorate([
-    (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_participante_dto_1.UpdateParticipanteDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [create_participante_dto_1.CreateParticipanteDto, Number]),
+    __metadata("design:returntype", Promise)
 ], ParticipanteController.prototype, "update", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
+    (0, common_1.Delete)('/delete/:id'),
+    (0, common_1.UsePipes)(common_1.ValidationPipe),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], ParticipanteController.prototype, "remove", null);
+    __metadata("design:returntype", Promise)
+], ParticipanteController.prototype, "delete", null);
 ParticipanteController = __decorate([
     (0, common_1.Controller)('participante'),
     __metadata("design:paramtypes", [participante_service_1.ParticipanteService])
