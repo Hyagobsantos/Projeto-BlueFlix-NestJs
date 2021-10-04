@@ -17,10 +17,45 @@ let FilmesService = class FilmesService {
         this.prisma = prisma;
     }
     async getAll() {
-        return this.prisma.filme.findMany();
+        return this.prisma.filme.findMany({
+            include: {
+                participantes: {
+                    select: {
+                        nome: true,
+                        imagem: true,
+                        data_nascimento: true,
+                        staff: true
+                    },
+                },
+                genero: {
+                    select: {
+                        nome: true,
+                    }
+                }
+            }
+        });
     }
-    async getId(where) {
-        return this.prisma.filme.findUnique({ where });
+    async getId(id) {
+        return this.prisma.filme.findUnique({
+            where: {
+                id: id,
+            },
+            include: {
+                participantes: {
+                    select: {
+                        nome: true,
+                        imagem: true,
+                        data_nascimento: true,
+                        staff: true
+                    },
+                },
+                genero: {
+                    select: {
+                        nome: true
+                    }
+                }
+            }
+        });
     }
     async create(data) {
         return this.prisma.filme.create({ data });

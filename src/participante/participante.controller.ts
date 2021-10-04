@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete,ValidationPipe,UsePipes,ParseIntPipe, Put} from '@nestjs/common';
 import { ParticipanteService } from './participante.service';
 import { CreateParticipanteDto } from './dto/create-participante.dto';
-import { Participantes } from '.prisma/client';
+import { participantes } from '.prisma/client';
 
 @Controller('participante')
 export class ParticipanteController {
@@ -21,13 +21,13 @@ export class ParticipanteController {
 
   @Post('create')
   @UsePipes(ValidationPipe)
-  async create(@Body() createParticipante: CreateParticipanteDto):Promise<Participantes> {
+  async create(@Body() createParticipante: CreateParticipanteDto):Promise<participantes> {
     return this.participanteService.create(createParticipante);
   }
 
   @Put('/update/:id')
   @UsePipes(ValidationPipe)
-  async update(@Body() createParticipante: CreateParticipanteDto, @Param('id', ParseIntPipe) id:number): Promise<Participantes> {
+  async update(@Body() createParticipante: CreateParticipanteDto, @Param('id', ParseIntPipe) id:number): Promise<participantes> {
     return this.participanteService.update(id, createParticipante);
   }
 

@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe,UsePipes,ParseIntPipe, Put, } from '@nestjs/common';
 import { GeneroService } from './genero.service';
 import { CreateGeneroDto } from './dto/create-genero.dto';
-import { Genero } from '.prisma/client';
+import { genero } from '.prisma/client';
 
 @Controller('genero')
 export class GeneroController {
@@ -21,13 +21,13 @@ export class GeneroController {
 
   @Post('create')
   @UsePipes(ValidationPipe)
-  async create(@Body() createGenero: CreateGeneroDto): Promise<Genero> {
+  async create(@Body() createGenero: CreateGeneroDto): Promise<genero> {
     return this.generoService.create(createGenero);
   }
 
   @Put('/update/:id')
   @UsePipes(ValidationPipe)
-  async update(@Body() updategenero: CreateGeneroDto, @Param('id', ParseIntPipe) id:number): Promise<Genero> {
+  async update(@Body() updategenero: CreateGeneroDto, @Param('id', ParseIntPipe) id:number): Promise<genero> {
     return this.generoService.updataOne(id, updategenero);
   }
 

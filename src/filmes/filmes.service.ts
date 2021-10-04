@@ -1,4 +1,4 @@
-import { Filme, Prisma } from '.prisma/client';
+import { filme, Prisma } from '.prisma/client';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -8,19 +8,54 @@ export class FilmesService {
   constructor(private prisma: PrismaService) {}
 
 
-  async getAll(): Promise<Filme[]> {
-    return this.prisma.filme.findMany();
+  async getAll(): Promise<filme[]> {
+    return this.prisma.filme.findMany({
+      include: {
+        participantes: {
+          select: {
+            nome: true,
+            imagem: true,
+            data_nascimento: true,
+            staff: true
+          },
+        },
+        genero: {
+          select: {
+            nome: true,
+          }
+        }
+      }
+    });
   }
 
-  async getId(where: Prisma.FilmeWhereUniqueInput): Promise<Filme> {
-    return this.prisma.filme.findUnique({ where })
+  async getId(id: number): Promise<filme> {
+    return this.prisma.filme.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        participantes: {
+          select: {
+            nome: true,
+            imagem: true,
+            data_nascimento: true,
+            staff: true
+          },
+        },
+        genero: {
+          select: {
+            nome: true
+          }
+        }
+      }
+    })
   }
 
-  async create(data: Prisma.FilmeCreateInput): Promise<Filme> {
+  async create(data: Prisma.filmeCreateInput): Promise<filme> {
     return this.prisma.filme.create({ data });
   }
 
-  async updataOne(filmeId: number, data: Prisma.FilmeCreateInput): Promise<Filme> {
+  async updataOne(filmeId: number, data: Prisma.filmeCreateInput): Promise<filme> {
     return this.prisma.filme.update({
       data,
       where: {
@@ -29,7 +64,7 @@ export class FilmesService {
     });
   }
 
-  async deleteOneFilme(where: Prisma.FilmeWhereUniqueInput): Promise<Filme> {
+  async deleteOneFilme(where: Prisma.filmeWhereUniqueInput): Promise<filme> {
     return this.prisma.filme.delete({where})
   }
  

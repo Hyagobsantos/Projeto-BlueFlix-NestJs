@@ -10,8 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateFilmeDto = void 0;
+const client_1 = require("@prisma/client");
 const class_validator_1 = require("class-validator");
-const participante_entity_1 = require("../../participante/entities/participante.entity");
 class CreateFilmeDto {
 }
 __decorate([
@@ -22,5 +22,21 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], CreateFilmeDto.prototype, "imagem", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], CreateFilmeDto.prototype, "data_lancamento", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", Number)
+], CreateFilmeDto.prototype, "duracao", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Object)
+], CreateFilmeDto.prototype, "genero", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Object)
+], CreateFilmeDto.prototype, "participantes", void 0);
 exports.CreateFilmeDto = CreateFilmeDto;
 //# sourceMappingURL=create-filme.dto.js.map

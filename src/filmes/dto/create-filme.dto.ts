@@ -1,6 +1,6 @@
-import { Genero } from '.prisma/client';
+import { Prisma } from '@prisma/client';
 import { IsNotEmpty, IsOptional } from 'class-validator';
-import { Participante } from 'src/participante/entities/participante.entity';
+
 
 export class CreateFilmeDto {
   @IsNotEmpty()
@@ -9,6 +9,15 @@ export class CreateFilmeDto {
   @IsOptional()
   imagem: string;
 
+  @IsNotEmpty()
   data_lancamento: string;
+
+  @IsNotEmpty()
   duracao: number;
+  
+  @IsOptional()
+  genero: Prisma.generoCreateNestedManyWithoutFilmeInput;
+
+  @IsOptional()
+  participantes: Prisma.participantesCreateNestedManyWithoutFilmeInput;
 }

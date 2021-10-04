@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common';
 import { FilmesService } from './filmes.service';
 import { CreateFilmeDto } from './dto/create-filme.dto';
-import { Filme } from '.prisma/client';
+import { filme } from '.prisma/client';
 
 @Controller('filmes')
 export class FilmesController {
@@ -27,19 +27,22 @@ export class FilmesController {
 
   @Get('/list/:id')
   @UsePipes(ValidationPipe)
-  getId(@Param('id') id: string) {
-    return this.filmesService.getId({ id: Number(id) });
+  getId(@Param('id', ParseIntPipe) id: number): Promise<filme> {
+    return this.filmesService.getId(id);
   }
 
   @Post('/create')
   @UsePipes(ValidationPipe)
-  async create(@Body() createFilme: CreateFilmeDto): Promise<Filme> {
+  async create(@Body() createFilme: CreateFilmeDto): Promise<filme> {
     return this.filmesService.create(createFilme);
   }
 
   @Put('/update/:id')
   @UsePipes(ValidationPipe)
-  async update(@Body() updateFilme: CreateFilmeDto, @Param('id', ParseIntPipe) id:number): Promise<Filme> {
+  async update(
+    @Body() updateFilme: CreateFilmeDto,
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<filme> {
     return this.filmesService.updataOne(id, updateFilme);
   }
 

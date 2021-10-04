@@ -7,7 +7,13 @@ export class CreateParticipanteDto {
 
   @IsOptional()
   imagem: string
+
+  @IsNotEmpty()
   data_nascimento: string
+
+  @IsNotEmpty()
   staff: string
+  
+  @IsOptional()
   filmeId: number
 }

@@ -1,4 +1,4 @@
-import { Genero, Prisma } from '.prisma/client';
+import { genero, Prisma } from '.prisma/client';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -6,22 +6,22 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class GeneroService {
   constructor(private prisma: PrismaService) {}
 
-  async getAll(): Promise<Genero[]> {
+  async getAll(): Promise<genero[]> {
     return this.prisma.genero.findMany();
   }
 
-  async getId(where: Prisma.FilmeWhereUniqueInput): Promise<Genero> {
+  async getId(where: Prisma.generoWhereUniqueInput): Promise<genero> {
     return this.prisma.genero.findUnique({ where });
   }
 
-  async create(data: Prisma.GeneroCreateInput): Promise<Genero> {
+  async create(data: Prisma.generoCreateInput): Promise<genero> {
     return this.prisma.genero.create({ data });
   }
 
   async updataOne(
     generoId: number,
-    data: Prisma.GeneroCreateInput,
-  ): Promise<Genero> {
+    data: Prisma.generoCreateInput,
+  ): Promise<genero> {
     return this.prisma.genero.update({
       data,
       where: {
@@ -30,7 +30,7 @@ export class GeneroService {
     });
   }
 
-  async deleteOneFilme(where: Prisma.GeneroWhereUniqueInput): Promise<Genero> {
+  async deleteOneFilme(where: Prisma.generoWhereUniqueInput): Promise<genero> {
     const user = this.prisma.genero.delete({ where });
     return user;
   }

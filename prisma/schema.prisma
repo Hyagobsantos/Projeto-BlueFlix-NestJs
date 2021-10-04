@@ -19,11 +19,9 @@ model filme {
 
 model genero {
   id      Int    @id @default(autoincrement())
-  nome    String @unique(map: "Genero_nome_key")
+  nome    String @unique
   filmeId Int?
-  filme   filme? @relation(fields: [filmeId], references: [id], map: "Genero_filmeId_fkey")
-
-  @@index([filmeId], map: "Genero_filmeId_fkey")
+  filme   filme? @relation(fields: [filmeId], references: [id])
 }
 
 model participantes {
@@ -33,7 +31,5 @@ model participantes {
   data_nascimento String
   staff           String
   filmeId         Int?
-  filme           filme? @relation(fields: [filmeId], references: [id], map: "Participantes_filmeId_fkey")
-
-  @@index([filmeId], map: "Participantes_filmeId_fkey")
+  filme           filme? @relation(fields: [filmeId], references: [id])
 }

@@ -24,7 +24,7 @@ let FilmesController = class FilmesController {
         return this.filmesService.getAll();
     }
     getId(id) {
-        return this.filmesService.getId({ id: Number(id) });
+        return this.filmesService.getId(id);
     }
     async create(createFilme) {
         return this.filmesService.create(createFilme);
@@ -46,10 +46,10 @@ __decorate([
 __decorate([
     (0, common_1.Get)('/list/:id'),
     (0, common_1.UsePipes)(common_1.ValidationPipe),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
 ], FilmesController.prototype, "getId", null);
 __decorate([
     (0, common_1.Post)('/create'),
