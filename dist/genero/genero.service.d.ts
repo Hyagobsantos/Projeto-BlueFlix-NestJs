@@ -1,12 +1,11 @@
+import { Genero, Prisma } from '.prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateGeneroDto } from './dto/create-genero.dto';
-import { UpdateGeneroDto } from './dto/update-genero.dto';
 export declare class GeneroService {
     private prisma;
     constructor(prisma: PrismaService);
-    create(createGeneroDto: CreateGeneroDto): string;
-    findAll(): string;
-    findOne(id: number): string;
-    update(id: number, updateGeneroDto: UpdateGeneroDto): string;
-    remove(id: number): string;
+    getAll(): Promise<Genero[]>;
+    getId(where: Prisma.FilmeWhereUniqueInput): Promise<Genero>;
+    create(data: Prisma.GeneroCreateInput): Promise<Genero>;
+    updataOne(generoId: number, data: Prisma.GeneroCreateInput): Promise<Genero>;
+    deleteOneFilme(where: Prisma.GeneroWhereUniqueInput): Promise<Genero>;
 }

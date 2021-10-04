@@ -1,34 +1,39 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe,UsePipes,ParseIntPipe, Put, } from '@nestjs/common';
 import { GeneroService } from './genero.service';
 import { CreateGeneroDto } from './dto/create-genero.dto';
-import { UpdateGeneroDto } from './dto/update-genero.dto';
+import { Genero } from '.prisma/client';
 
 @Controller('genero')
 export class GeneroController {
-  constructor(private readonly generoService: GeneroService) {}
+  constructor(private generoService: GeneroService) {}
 
-  @Post()
-  create(@Body() createGeneroDto: CreateGeneroDto) {
-    return this.generoService.create(createGeneroDto);
+  @Get('/list')
+  @UsePipes(ValidationPipe)
+  getAll() {
+    return this.generoService.getAll();
   }
 
-  @Get()
-  findAll() {
-    return this.generoService.findAll();
+  @Get('/list/:id')
+  @UsePipes(ValidationPipe)
+  getId(@Param('id') id: string) {
+    return this.generoService.getId({ id: Number(id) });
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.generoService.findOne(+id);
+  @Post('create')
+  @UsePipes(ValidationPipe)
+  async create(@Body() createGenero: CreateGeneroDto): Promise<Genero> {
+    return this.generoService.create(createGenero);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateGeneroDto: UpdateGeneroDto) {
-    return this.generoService.update(+id, updateGeneroDto);
+  @Put('/update/:id')
+  @UsePipes(ValidationPipe)
+  async update(@Body() updategenero: CreateGeneroDto, @Param('id', ParseIntPipe) id:number): Promise<Genero> {
+    return this.generoService.updataOne(id, updategenero);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.generoService.remove(+id);
+  @Delete('/delete/:id')
+  @UsePipes(ValidationPipe)
+  async delete(@Param('id') id: string) {
+    return this.generoService.deleteOneFilme({ id: Number(id) });
   }
 }

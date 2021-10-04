@@ -8,23 +8,28 @@ import { UpdateGeneroDto } from './dto/update-genero.dto';
 export class GeneroService {
   constructor(private prisma: PrismaService) {}
 
-  create(data: Prisma.GeneroCreateInput): Promise<Genero> {
+  async getAll(): Promise<Genero[]> {
+    return this.prisma.genero.findMany();
+  }
+
+  async getId(where: Prisma.FilmeWhereUniqueInput): Promise<Genero> {
+    return this.prisma.genero.findUnique({ where })
+  }
+
+  async create(data: Prisma.GeneroCreateInput): Promise<Genero> {
     return this.prisma.genero.create({ data });
   }
 
-  findAll() {
-    return `This action returns all genero`;
+  async updataOne(generoId: number, data: Prisma.GeneroCreateInput): Promise<Genero> {
+    return this.prisma.genero.update({
+      data,
+      where: {
+        id: generoId
+      },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} genero`;
-  }
-
-  update(id: number, updateGeneroDto: UpdateGeneroDto) {
-    return `This action updates a #${id} genero`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} genero`;
+  async deleteOneFilme(where: Prisma.GeneroWhereUniqueInput): Promise<Genero> {
+    return this.prisma.genero.delete({where})
   }
 }

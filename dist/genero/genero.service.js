@@ -16,20 +16,25 @@ let GeneroService = class GeneroService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    create(createGeneroDto) {
-        return 'This action adds a new genero';
+    async getAll() {
+        return this.prisma.genero.findMany();
     }
-    findAll() {
-        return `This action returns all genero`;
+    async getId(where) {
+        return this.prisma.genero.findUnique({ where });
     }
-    findOne(id) {
-        return `This action returns a #${id} genero`;
+    async create(data) {
+        return this.prisma.genero.create({ data });
     }
-    update(id, updateGeneroDto) {
-        return `This action updates a #${id} genero`;
+    async updataOne(generoId, data) {
+        return this.prisma.genero.update({
+            data,
+            where: {
+                id: generoId
+            },
+        });
     }
-    remove(id) {
-        return `This action removes a #${id} genero`;
+    async deleteOneFilme(where) {
+        return this.prisma.genero.delete({ where });
     }
 };
 GeneroService = __decorate([

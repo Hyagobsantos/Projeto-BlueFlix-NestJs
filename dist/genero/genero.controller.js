@@ -16,62 +16,66 @@ exports.GeneroController = void 0;
 const common_1 = require("@nestjs/common");
 const genero_service_1 = require("./genero.service");
 const create_genero_dto_1 = require("./dto/create-genero.dto");
-const update_genero_dto_1 = require("./dto/update-genero.dto");
 let GeneroController = class GeneroController {
     constructor(generoService) {
         this.generoService = generoService;
     }
-    create(createGeneroDto) {
-        return this.generoService.create(createGeneroDto);
+    getAll() {
+        return this.generoService.getAll();
     }
-    findAll() {
-        return this.generoService.findAll();
+    getId(id) {
+        return this.generoService.getId({ id: Number(id) });
     }
-    findOne(id) {
-        return this.generoService.findOne(+id);
+    async create(createGenero) {
+        return this.generoService.create(createGenero);
     }
-    update(id, updateGeneroDto) {
-        return this.generoService.update(+id, updateGeneroDto);
+    async update(updategenero, id) {
+        return this.generoService.updataOne(id, updategenero);
     }
-    remove(id) {
-        return this.generoService.remove(+id);
+    async delete(id) {
+        return this.generoService.deleteOneFilme({ id: Number(id) });
     }
 };
 __decorate([
-    (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_genero_dto_1.CreateGeneroDto]),
-    __metadata("design:returntype", void 0)
-], GeneroController.prototype, "create", null);
-__decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Get)('/list'),
+    (0, common_1.UsePipes)(common_1.ValidationPipe),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], GeneroController.prototype, "findAll", null);
+], GeneroController.prototype, "getAll", null);
 __decorate([
-    (0, common_1.Get)(':id'),
+    (0, common_1.Get)('/list/:id'),
+    (0, common_1.UsePipes)(common_1.ValidationPipe),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-], GeneroController.prototype, "findOne", null);
+], GeneroController.prototype, "getId", null);
 __decorate([
-    (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
+    (0, common_1.Post)('create'),
+    (0, common_1.UsePipes)(common_1.ValidationPipe),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_genero_dto_1.UpdateGeneroDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [create_genero_dto_1.CreateGeneroDto]),
+    __metadata("design:returntype", Promise)
+], GeneroController.prototype, "create", null);
+__decorate([
+    (0, common_1.Put)('/update/:id'),
+    (0, common_1.UsePipes)(common_1.ValidationPipe),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_genero_dto_1.CreateGeneroDto, Number]),
+    __metadata("design:returntype", Promise)
 ], GeneroController.prototype, "update", null);
 __decorate([
-    (0, common_1.Delete)(':id'),
+    (0, common_1.Delete)('/delete/:id'),
+    (0, common_1.UsePipes)(common_1.ValidationPipe),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], GeneroController.prototype, "remove", null);
+    __metadata("design:returntype", Promise)
+], GeneroController.prototype, "delete", null);
 GeneroController = __decorate([
     (0, common_1.Controller)('genero'),
     __metadata("design:paramtypes", [genero_service_1.GeneroService])
