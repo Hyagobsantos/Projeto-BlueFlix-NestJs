@@ -22,8 +22,8 @@ let ParticipanteService = class ParticipanteService {
     async findOne(participanteId) {
         return this.prisma.participantes.findUnique({
             where: {
-                id: participanteId
-            }
+                id: participanteId,
+            },
         });
     }
     async create(data) {
@@ -33,7 +33,7 @@ let ParticipanteService = class ParticipanteService {
         return this.prisma.participantes.update({
             data,
             where: {
-                id: participanteId
+                id: participanteId,
             },
         });
     }

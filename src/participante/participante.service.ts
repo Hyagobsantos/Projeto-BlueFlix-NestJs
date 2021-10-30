@@ -1,40 +1,42 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateParticipanteDto } from './dto/create-participante.dto';
-import { UpdateParticipanteDto } from './dto/update-participante.dto';
 import { participantes, Prisma } from '.prisma/client';
 
 @Injectable()
 export class ParticipanteService {
-
-  constructor(private prisma:PrismaService){}
+  constructor(private prisma: PrismaService) {}
 
   async findAll(): Promise<participantes[]> {
-    return this.prisma.participantes.findMany()
+    return this.prisma.participantes.findMany();
   }
 
-  async findOne(participanteId: number): Promise<participantes>{
+  async findOne(participanteId: number): Promise<participantes> {
     return this.prisma.participantes.findUnique({
       where: {
-        id: participanteId
-      }
-    })
+        id: participanteId,
+      },
+    });
   }
 
   async create(data: Prisma.participantesCreateInput): Promise<participantes> {
-    return this.prisma.participantes.create({ data }) 
+    return this.prisma.participantes.create({ data });
   }
 
-  async update(participanteId: number, data:Prisma.participantesCreateInput): Promise<participantes> {
+  async update(
+    participanteId: number,
+    data: Prisma.participantesCreateInput,
+  ): Promise<participantes> {
     return this.prisma.participantes.update({
       data,
       where: {
-        id: participanteId
+        id: participanteId,
       },
-    })
+    });
   }
 
-  async remove(where: Prisma.participantesWhereUniqueInput):Promise<participantes> {
-    return this.prisma.participantes.delete({where})
+  async remove(
+    where: Prisma.participantesWhereUniqueInput,
+  ): Promise<participantes> {
+    return this.prisma.participantes.delete({ where });
   }
 }
